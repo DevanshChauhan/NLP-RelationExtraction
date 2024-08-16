@@ -2,32 +2,31 @@
 
 ## Project Overview
 
-This project focuses on the task of **Relation Extraction (RE)**, a critical area in Natural Language Processing (NLP). The goal of RE is to determine and categorize the semantic links between entities in a text. In this project, we have developed machine learning models to extract relationships from the **BioRED** dataset. The models we employed include:
+This project focuses on **Relation Extraction (RE)**, an essential task in Natural Language Processing (NLP). RE involves determining and categorizing semantic relationships between entities in text. In this project, we apply machine learning techniques to extract relationships from the **BioRED** dataset. The models used include:
 
 1. **Support Vector Machine (SVM)**
 2. **Transformer-based model using RoBERTa**
 
 ## Dataset
 
-The dataset used in this project is **BioRED** (Biological Research Entity Dataset), a specialized dataset that contains named entities and the relationships between them in biomedical literature.
+The **BioRED** (Biological Research Entity Dataset) is a specialized dataset containing named entities and their relationships in biomedical literature.
 
 ### Preprocessing
 
-The preprocessing steps included:
-
-- Tokenization of text data
-- Entity recognition and extraction
-- Data cleaning and formatting to prepare it for model training
+Preprocessing includes:
+- Tokenizing text data
+- Extracting named entities
+- Cleaning and formatting the data for training
 
 ## Models and Methodology
 
 ### 1. **Support Vector Machine (SVM)**
-   - **Model Description**: A traditional machine learning model was trained on the preprocessed BioRED data to predict relationships between named entities.
-   - **Performance**: This model achieved an **F-score of 0.55**, which serves as a baseline for comparison.
+   - **Model Description**: A traditional SVM model trained on the preprocessed BioRED data to predict relationships between entities.
+   - **Performance**: Achieved an **F-score of 0.55**, serving as a baseline for comparison.
 
 ### 2. **RoBERTa (Transformer-based Model)**
-   - **Model Description**: A pre-trained RoBERTa model was fine-tuned on the BioRED dataset for relation extraction. This model leverages transformers for better context understanding and relationship extraction.
-   - **Performance**: The RoBERTa-based model outperformed the SVM, with an **F-score of 0.76**, demonstrating its effectiveness for this complex task.
+   - **Model Description**: A pre-trained RoBERTa model fine-tuned on the BioRED dataset for relation extraction, leveraging transformers for advanced context understanding.
+   - **Performance**: The RoBERTa model achieved a significantly better **F-score of 0.76**, outperforming the SVM model.
 
 ## Results
 
@@ -36,50 +35,97 @@ The preprocessing steps included:
 | SVM        | 0.55    |
 | RoBERTa    | 0.76    |
 
-The RoBERTa-based approach shows significant improvement over the traditional SVM model, which is noteworthy given the complexity of the BioRED dataset.
+## Transformer Model Setup and Instructions
+
+### Installation
+
+To set up the transformer model, follow these steps:
+
+```bash
+pip install spacy
+pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_md-0.5.4.tar.gz
+pip install -U pip setuptools wheel
+python -m spacy download en_core_web_trf 
+pip install -U spacy transformers
+pip install jupyter-notebook
+```
+
+### Training the Transformer Model
+
+1. **Clear Previous Models** (if applicable):
+   ```bash
+   spacy project clean
+   ```
+
+2. **Training on GPU** (strongly recommended):
+   ```bash
+   spacy project run train_gpu
+   ```
+
+3. **Training on CPU**:
+   ```bash
+   spacy project run train_cpu
+   ```
+
+### Evaluation
+
+To evaluate the trained model, use the following command:
+
+```bash
+spacy project run evaluate
+```
+
+### Prediction
+
+1. Place your prediction files in the `assets` directory, following the format of the sample `Predict.BioC.JSON` file.
+2. Run the following command for prediction:
+
+- **On GPU**:
+  ```bash
+  spacy project run all_gpu
+  ```
+
+- **On CPU**:
+  ```bash
+  spacy project run all
+  ```
 
 ## Conclusion
 
-This project demonstrates the application of both traditional and transformer-based machine learning models for relation extraction in the BioRED dataset. While the SVM model provides a solid baseline, the transformer-based RoBERTa model yields substantially better results. This work highlights the effectiveness of advanced transformer models in complex NLP tasks like relation extraction.
+This project demonstrates the application of SVM and transformer-based models (RoBERTa) for relation extraction in the BioRED dataset. While the SVM model provides a solid baseline, the transformer-based RoBERTa model significantly improves performance. The included transformer model setup provides a robust starting point for further experimentation in advanced NLP tasks.
 
 ## Requirements
 
-To reproduce the results, you will need the following libraries and dependencies:
+To reproduce the results, you will need the following dependencies:
 
 - Python 3.8+
 - scikit-learn
 - PyTorch
 - Transformers (Hugging Face)
+- spaCy
 - pandas
 - numpy
 
-You can install the required libraries using the following command:
+Install the dependencies using the command:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
-
-1. **Data Preprocessing**: Preprocess the BioRED dataset by running the `preprocess.py` script.
-2. **Model Training**: Train the SVM and RoBERTa models using the `train_svm.py` and `train_roberta.py` scripts, respectively.
-3. **Evaluation**: Evaluate the models on the test set using the `evaluate.py` script, and compare the F-scores.
-
 ## Future Work
 
-- Further fine-tuning of the transformer-based models for better performance
-- Exploration of additional pre-trained models like BERT, GPT, etc.
-- Experimenting with other advanced NLP techniques such as graph neural networks (GNNs) for relation extraction
+- Further fine-tuning of transformer-based models
+- Exploration of additional models like BERT, GPT, etc.
+- Experimentation with advanced techniques such as graph neural networks (GNNs)
 
 ## Acknowledgments
 
-This project was developed as part of an effort to explore machine learning techniques in relation extraction tasks within the biomedical domain. Special thanks to the creators of the **BioRED dataset** for providing a rich and complex dataset for research purposes.
+Special thanks to the creators of the **BioRED dataset** for providing a rich dataset for research. This project was developed as part of an effort to explore machine learning techniques in relation extraction within the biomedical domain.
 
 ## Contact
 
-For any queries or collaboration opportunities, please feel free to reach out to me:
+For any queries or collaboration opportunities:
 
 - **Devansh Chauhan**
 - [LinkedIn](https://www.linkedin.com/in/devansh-chauhan-773901171/)
 - [GitHub](https://github.com/DevanshChauhan)
-
