@@ -1,0 +1,31 @@
+train_gpu:
+  cmd: python -m weasel run train_gpu
+  script:
+    - python -m spacy train configs/rel_trf.cfg --output training --paths.train data/Train_BioC.spacy
+      --paths.dev data/Dev_BioC.spacy -c ./scripts/custom_functions.py --gpu-id 0
+  deps:
+    - path: data/Train_BioC.spacy
+      md5: 2b570a59e9cc4dbfc89e2bc2a07ea308
+    - path: data/Dev_BioC.spacy
+      md5: 7fb0c7c231d68e2daacb63db3096a3cc
+  outs:
+    - path: training/model-best
+      md5: 1008263b346cbafce59344d721888608
+evaluate:
+  cmd: python -m weasel run evaluate
+  script:
+    - python ./scripts/evaluate.py training/model-best data/Test_BioC.spacy False
+  deps:
+    - path: training/model-best
+      md5: 1008263b346cbafce59344d721888608
+    - path: data/Test_BioC.spacy
+      md5: f8068e2d934af0322752a0c776ad00a2
+  outs: []
+pdata:
+  cmd: python -m weasel run pdata
+  script:
+    - python ./scripts/parse_data.py
+  deps: []
+  outs:
+    - path: data/Predict_BioC.spacy
+      md5: 0cad1467901bef4c8902178ec6edd246
